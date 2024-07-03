@@ -1,0 +1,129 @@
+version: '3.9'
+
+services:
+  node1:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=1
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.11  # Endereço IPv4 único para node1
+        ipv6_address: 2001:db8::1:1  # Endereço IPv6 único para node1
+    ports:
+      - "3001:3000"  # Mapeamento de porta: 3001 do host para 3000 do contêiner
+
+  node2:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=2
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.12  # Endereço IPv4 único para node2
+        ipv6_address: 2001:db8::1:2  # Endereço IPv6 único para node2
+    ports:
+      - "3002:3000"  # Mapeamento de porta: 3002 do host para 3000 do contêiner
+
+  node3:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=3
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.13  # Endereço IPv4 único para node3
+        ipv6_address: 2001:db8::1:3  # Endereço IPv6 único para node3
+    ports:
+      - "3003:3000"  # Mapeamento de porta: 3003 do host para 3000 do contêiner
+
+  node4:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=4
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.14  # Endereço IPv4 único para node4
+        ipv6_address: 2001:db8::1:4  # Endereço IPv6 único para node4
+    ports:
+      - "3004:3000"  # Mapeamento de porta: 3004 do host para 3000 do contêiner
+
+  node5:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=5
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.15  # Endereço IPv4 único para node5
+        ipv6_address: 2001:db8::1:5  # Endereço IPv6 único para node5
+    ports:
+      - "3005:3000"  # Mapeamento de porta: 3005 do host para 3000 do contêiner
+
+  node6:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=6
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.16  # Endereço IPv4 único para node6
+        ipv6_address: 2001:db8::1:6  # Endereço IPv6 único para node6
+    ports:
+      - "3006:3000"  # Mapeamento de porta: 3006 do host para 3000 do contêiner
+
+  node7:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=7
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.17  # Endereço IPv4 único para node7
+        ipv6_address: 2001:db8::1:7  # Endereço IPv6 único para node7
+    ports:
+      - "3007:3000"  # Mapeamento de porta: 3007 do host para 3000 do contêiner
+
+  node8:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=8
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.18  # Endereço IPv4 único para node8
+        ipv6_address: 2001:db8::1:8  # Endereço IPv6 único para node8
+    ports:
+      - "3008:3000"  # Mapeamento de porta: 3008 do host para 3000 do contêiner
+
+  node9:
+    build: 
+      context: ./node
+    environment:
+      - PARAM1=9
+      - PARAM2=311
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.19  # Endereço IPv4 único para node9
+        ipv6_address: 2001:db8::1:9  # Endereço IPv6 único para node9
+    ports:
+      - "3009:3000"  # Mapeamento de porta: 3009 do host para 3000 do contêiner
+
+networks:
+  mynet:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16  # Subnet IPv4 para a rede
+        - subnet: 2001:db8::/64  # Subnet IPv6 para a rede
