@@ -18,56 +18,59 @@ async function request_data_fipe(url, jsonData) {
         }
     }
 
-async function get_veiculos_marca(idMarca,tabela){
-    const vaiculos=[]
-    const form_modelos = {
-    "codigoTipoVeiculo": 1,
-    "codigoTabelaReferencia": tabela,
-    "codigoModelo":null ,
-    "codigoMarca": idMarca,
-    "ano": null,
-    "codigoTipoCombustivel": null,
-    "anoModelo": null,
-    "modeloCodigoExterno": null,
-    };
-    modelos_lista = await request_data_fipe(url_modelo ,form_modelos)
-    for (var i = 0; i < modelos_lista['Modelos'].length; i++) {
-      const form_ano_modelo = {
+async function get_veiculos_marca(idMarca){
+    for (let tabela = 161; tabela < 311; tabela++) {
+        tabela++
+        const vaiculos=[]
+        const form_modelos = {
         "codigoTipoVeiculo": 1,
         "codigoTabelaReferencia": tabela,
-        "codigoModelo": modelos_lista['Modelos'][i]['Value'],
+        "codigoModelo":null ,
         "codigoMarca": idMarca,
         "ano": null,
         "codigoTipoCombustivel": null,
         "anoModelo": null,
         "modeloCodigoExterno": null,
-        }
-        ano_modelo_lista = await request_data_fipe(url_ano_modelo  ,form_ano_modelo)
-        for (let x = 0; x < ano_modelo_lista.length; x++) {
-            const form_modelos_ano = {
-            "codigoTabelaReferencia": tabela,
-            "codigoMarca": idMarca,
-            "codigoModelo": modelos_lista['Modelos'][i]['Value'],
+        };
+        modelos_lista = await request_data_fipe(url_modelo ,form_modelos)
+        for (var i = 0; i < modelos_lista['Modelos'].length; i++) {
+          const form_ano_modelo = {
             "codigoTipoVeiculo": 1,
-            "anoModelo": parseInt(ano_modelo_lista[x]['Value'].split('-')[0]),
-            "codigoTipoCombustivel": parseInt(ano_modelo_lista[x]['Value'].split('-')[1]),
-            "tipoVeiculo": "carro",
-            "modeloCodigoExterno":null,
-            "tipoConsulta": 'tradicional',
-            
+            "codigoTabelaReferencia": tabela,
+            "codigoModelo": modelos_lista['Modelos'][i]['Value'],
+            "codigoMarca": idMarca,
+            "ano": null,
+            "codigoTipoCombustivel": null,
+            "anoModelo": null,
+            "modeloCodigoExterno": null,
             }
-            await delay(3000);
-            modelo_ano_lista = await request_data_fipe(url_valor_parametros,form_modelos_ano)
-
-                const objeto = modelo_ano_lista;
-                const jsonString = JSON.stringify(objeto) + '\n'; // Adiciona uma quebra de linha no final
-                fs.writeFile('response.json', jsonString, {flag: 'a'}, (err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    console.log(`Objeto ${i} adicionado ao arquivo response.json`);
-                });
+            ano_modelo_lista = await request_data_fipe(url_ano_modelo  ,form_ano_modelo)
+            for (let x = 0; x < ano_modelo_lista.length; x++) {
+                const form_modelos_ano = {
+                "codigoTabelaReferencia": tabela,
+                "codigoMarca": idMarca,
+                "codigoModelo": modelos_lista['Modelos'][i]['Value'],
+                "codigoTipoVeiculo": 1,
+                "anoModelo": parseInt(ano_modelo_lista[x]['Value'].split('-')[0]),
+                "codigoTipoCombustivel": parseInt(ano_modelo_lista[x]['Value'].split('-')[1]),
+                "tipoVeiculo": "carro",
+                "modeloCodigoExterno":null,
+                "tipoConsulta": 'tradicional',
+                
+                }
+                await delay(2500);
+                modelo_ano_lista = await request_data_fipe(url_valor_parametros,form_modelos_ano)
+    
+                    const objeto = modelo_ano_lista;
+                    const jsonString = JSON.stringify(objeto) + '\n'; // Adiciona uma quebra de linha no final
+                    fs.writeFile('acura_'+ tabela +'.json', jsonString, {flag: 'a'}, (err) => {
+                        if (err) {
+                            console.error(err);
+                            return;
+                        }
+                        console.log(`Objeto ${i} adicionado ao arquivo response.json`);
+                    });
+                }
             }
         }
     }
@@ -76,7 +79,4 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-const param1 = process.env.PARAM1;
-const param2 = process.env.PARAM2;
-
-get_veiculos_marca(param1, param2);
+get_veiculos_marca(1);
